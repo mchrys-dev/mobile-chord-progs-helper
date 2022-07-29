@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Chord progressions helper</string>
+    <string name="title_activity_main">Chord progressions helper</string>
+    <string name="package_name">cma.chordprogshelper</string>
+    <string name="custom_url_scheme">cma.chordprogshelper</string>
+</resources>

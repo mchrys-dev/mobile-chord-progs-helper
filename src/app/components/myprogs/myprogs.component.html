@@ -1,0 +1,90 @@
+<h1>{{ textsService.getText('myProgs') }}</h1>
+
+<a class="btn btn-primary mb-3" routerLink="create-prog">
+  <i class="fa-solid fa-circle-plus"></i> {{ textsService.getText('createProg') }}
+</a>
+
+<p *ngIf="myProgs.length === 0 ; else progs_table">{{ textsService.getText('noProgs') }}</p>
+
+<ng-template #progs_table>
+    <!-- <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">{{ textsService.getText('chords') }}</th>
+            <th scope="col">{{ textsService.getText('key') }}</th>
+            <th scope="col">{{ textsService.getText('scale') }}</th>
+            <th scope="col">{{ textsService.getText('createdAt') }}</th>
+            <th scope="col">{{ textsService.getText('actions') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prog of myProgs" class="align-middle">
+            <td>{{ chordsService.progsChordStr(prog) }}</td>
+            <td>{{ keysService.find(prog.selKeyId).I }}</td>
+            <td>{{ scaleTypesService.findOne(prog.selScaleTypeId).name[textsService.getLang()] }}</td>
+            <td>{{ utilitiesService.dateTimeFromTimestamp(prog.id) }}</td>
+            <td>
+              <button class="btn btn-primary m-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-danger m-2">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+    </table> -->
+    <section class="d-flex flex-row flex-wrap justify-content-center justify-content-md-start">
+      <article class="card m-2 col-10 col-md-5 col-lg-3" *ngFor="let prog of myProgs.reverse()">
+        <div class="card-header">
+          <p>{{ textsService.getText('createdAt') }} {{ utilitiesService.dateTimeFromTimestamp(prog.id) }}</p>
+          <p>{{ textsService.getText('editedAt') }} {{ utilitiesService.dateTimeFromTimestamp(prog.editedAt) }}</p>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            {{ textsService.getText('key') }}: {{ keysService.find(prog.selKeyId).I }}
+          </p>
+          <p class="card-text">
+            {{ textsService.getText('scale') }}: {{ scaleTypesService.findOne(prog.selScaleTypeId).name[textsService.getLang()] }}
+          </p>
+          <p class="card-text">
+            {{ textsService.getText('chords') }}: {{ chordsService.progsChordStr(prog) }}
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          <a class="btn btn-primary m-2" [routerLink]="['/edit-prog', prog.id]">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="setIdProgToDelete(prog.id)">
+            <i class="fa-solid fa-trash-can"></i>
+          </a>
+        </div>
+      </article>
+    </section>
+</ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ textsService.getText('deleteProgTitle') }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ textsService.getText('deleteProgText') }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteProg()">
+          {{ textsService.getText('yes') }}
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ textsService.getText('no') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ 
